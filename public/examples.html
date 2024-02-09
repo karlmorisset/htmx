@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>HTMX Crash Course - Traversy Media</title>
+</head>
+<body>
+  <div class="text-center">
+      <h1 class="text-2xl font-bold my-5">
+        Polling example
+      </h1>
+      <span hx-get="poll" hx-trigger="every 1s">Loading...</span>
+    </div>
+    <hr>
+    <div class="text-center">
+      <h1 class="text-2xl font-bold my-5">
+        Simple Request Sample
+      </h1>
+      <button
+        hx-get="/users"
+        hx-target="#users"
+        hx-vals='{"limit": 3}'
+        hx-indicator="#loading"
+        class="bg-blue-500 text-white py-2 px-3 my-5 rounded-lg">
+        Fetch users
+      </button>
+      <span class="htmx-indicator" id="loading"><img class="m-auto h-10" src="/img/loader.gif" alt="Loading..."></span>
+      <div id="users"></div>
+      <hr>
+      <h1 class="text-2xl font-bold my-5">
+        Convertisseur de température
+      </h1>
+
+      <form
+        hx-trigger="submit"
+        hx-post="/convert"
+        hx-target="#result"
+        hx-indicator="#loading2"
+        >
+        <label for="farenheit">Farenheit:</label>
+        <input
+          type="number"
+          id="farenheit"
+          name="farenheit"
+          class="border p-2 rounded"
+          value="32"
+          required
+        />
+        <button
+          class="bg-blue-500 text-white py-2 px-3 my-5 rounded-lg">
+          Convertir en degrés Celsius
+        </button>
+
+        <span class="htmx-indicator" id="loading2"><img class="m-auto h-10" src="/img/loader.gif" alt="Loading..."></span>
+        <div id="result" class="mt-4 text-xl"></div>
+      </form>
+
+      <hr>
+
+      <div class="text-center bg-zinc-800 mt-6">
+        <h1 class="text-2xl text-white">Recherche de contacts</h1>
+        <input
+          class="border border-gray-600 bg-gray-800 rounded-lg my-5 text-white px-2"
+          type="search"
+          name="search"
+          placeholder="Commencez à taper un nom..."
+          hx-target="#search-results"
+          hx-post="/search"
+          hx-trigger="input changed delay:200ms, search, load"
+          hx-indicator="#loading"
+        >
+
+        <span class="htmx-indicator" id="loading"><img class="m-auto h-10" src="/img/loader.gif" alt="Loading..."></span>
+
+        <table class="min-w-full divide-y divide-gray-200 text-white">
+          <thead class=" bg-gray-800 text-white">
+            <tr>
+              <th
+                scope="col"
+                class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">Name
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">Email
+              </th>
+            </tr>
+          </thead>
+          <tbody id="search-results" class="divide-y divide-white"></tbody>
+        </table>
+      </div>
+  </div>
+</body>
+</html>
